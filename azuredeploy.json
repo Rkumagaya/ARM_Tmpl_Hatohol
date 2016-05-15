@@ -44,7 +44,7 @@
       "type": "string",
       "defaultValue": "axs7sp1licazu",
       "allowedValues": [
-        "axs7licazu"
+        "axs7sp1licazu"
       ],
       "metadata": {
         "description": "The Asianux version for the VM. Allowed values: Asianux 7."
