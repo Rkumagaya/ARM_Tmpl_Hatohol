@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "MIRACLE ZBX Server on Asianux7 VM",
+  "description": "This template uses the Azure Linux CustomScript extension to deploy an MIRACLE ZBX Server. The deployment template creates an Asianux7 VM.",
+  "summary": "Deploy an Asianux7 VM with MIRACLE ZBX Server",
+  "githubUsername": "Rkumagaya",
+  "dateUpdated": "2016-02-25"
+}
