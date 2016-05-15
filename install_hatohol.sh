@@ -5,7 +5,8 @@ yum install -y unzip wget
 wget -P /etc/yum.repos.d/ http://project-hatohol.github.io/repo/hatohol-el7.repo
 wget -P /tmp/ http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
 rpm -ivh /tmp/epel-release-7-6.noarch.rpm
-yum install -y hatohol-server hatohol-web
+yum install -y hatohol-server-16.01
+yum install -y hatohol-web-16.01
 yum install -y mariadb-server
 
 systemctl enable mariadb
@@ -40,17 +41,14 @@ curl -kL  https://bootstrap.pypa.io/get-pip.py | python
 pip install pika daemon
 yum install -y hatohol-hap2-fluentd
 
-curl -L  http://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh|sh
-
-mkdir /opt/azure_trapper
-echo > trap_azu.log
+mkdir ~/azure_trapper
 chmod a+r,a+w /opt/azure_trapper/trap_azu.log
-wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.py
-wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/start_hap_fluentd.sh
-wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/Azure-reader.conf
+wget -P ~/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.py
+wget -P ~/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/start_hap_fluentd.sh
+wget -P ~/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/Azure-reader.conf
 wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/hap_fluentd.service
 wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.service
 
-chmod a+x /opt/azure_trapper/start_hap_fluentd.sh
-chmod a+x /opt/azure_trapper/azure_trapper.py
+chmod a+x ~/azure_trapper/start_hap_fluentd.sh
+chmod a+x ~/azure_trapper/azure_trapper.py
 systemctl daemon-reload
