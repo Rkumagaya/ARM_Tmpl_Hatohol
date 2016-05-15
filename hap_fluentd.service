@@ -1,7 +1,7 @@
 [Unit]
 Description=Azure trapper Daemon
 [Service]
-ExecStart=~/azure_trapper/start_hap_fluentd.sh
+ExecStart=/opt/azure_trapper/start_hap_fluentd.sh
 Restart=always
 Type=simple
 [Install]
