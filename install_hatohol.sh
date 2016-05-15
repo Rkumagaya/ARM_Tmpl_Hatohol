@@ -25,9 +25,9 @@ systemctl start httpd
 
 #プラグイン周り
 wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo
-yum install erlang
+yum install -y erlang
 rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-yum install rabbitmq-server
+yum install -y rabbitmq-server
 
 setsebool -P nis_enabled 1
 systemctl enable rabbitmq-server
