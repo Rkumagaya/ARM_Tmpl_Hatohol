@@ -6,6 +6,7 @@ wget -P /etc/yum.repos.d/ http://project-hatohol.github.io/repo/hatohol-el7.repo
 wget -P /tmp/ http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
 rpm -ivh /tmp/epel-release-7-6.noarch.rpm
 yum install -y hatohol-server hatohol-web
+yum install -y mariadb-server
 
 #configure firewall
 #firewall-cmd --zone=public --add-port=80/tcp --permanent
