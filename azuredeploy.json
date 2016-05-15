@@ -42,7 +42,7 @@
     },
     "OSVersion": {
       "type": "string",
-      "defaultValue": "axs7licazu",
+      "defaultValue": "axs7sp1licazu",
       "allowedValues": [
         "axs7licazu"
       ],
