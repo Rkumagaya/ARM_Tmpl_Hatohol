@@ -4,5 +4,7 @@ Description=Azure trapper Daemon
 ExecStart=/opt/azure_trapper/azure_trapper.py
 Restart=always
 Type=simple
+User=root
+Group=root
 [Install]
 WantedBy=multi-user.target

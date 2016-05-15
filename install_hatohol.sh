@@ -42,7 +42,7 @@ pip install pika daemon
 yum install -y hatohol-hap2-fluentd-16.01
 
 mkdir /opt/azure_trapper
-chmod 777 /opt/azure_trapper
+chmod a+r,a+w /opt/azure_trapper
 wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.py
 wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/start_hap_fluentd.sh
 wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/Azure-reader.conf

@@ -32,7 +32,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
-	logging.basicConfig(level=logging.DEBUG, filename="trap_azu.log",format="%(asctime)s %(message)s", datefmt='%Y-%m-%d %H:%M:%S')
+	logging.basicConfig(level=logging.DEBUG, filename="/opt/azure_trapper/trap_azu.log",format="%(asctime)s %(message)s", datefmt='%Y-%m-%d %H:%M:%S')
 	form = cgi.FieldStorage(
             fp=self.rfile,
             headers=self.headers,
