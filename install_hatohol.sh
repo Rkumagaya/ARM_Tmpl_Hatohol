@@ -1,16 +1,18 @@
 #!/bin/bash
 
-#install zbx2.2
-rpm --import http://ftp.miraclelinux.com/zbx/RPM-GPG-KEY-MIRACLE
-rpm -ihv http://ftp.miraclelinux.com/zbx/2.2/miracle-zbx-release-2.2-1.noarch.rpm
-yum install -y zabbix zabbix-server zabbix-server-mysql zabbix-web zabbix-web-mysql zabbix-web-japanese zabbix-agent zabbix-java-gateway mariadb-server
-
+#install hatohol
+wget -P /etc/yum.repos.d/ http://project-hatohol.github.io/repo/hatohol-el7.repo
+wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo
+yum install -y epel-release
+yum install -y hatohol-server hatohol-web erlang
+rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+yum install -y rabbitmq-server
 
 #configure firewall
 firewall-cmd --zone=public --add-port=80/tcp --permanent
-firewall-cmd --zone=public --add-port=10051/tcp --permanent
 firewall-cmd --zone=public --add-port=162/udp --permanent
-firewall-cmd --zone=public --add-port=10050/tcp --permanent
+firewall-cmd --add-port=5672/tcp --zone=public --permanent
+firewall-cmd --add-port=5672/tcp --zone=public
 
 #cnfigure mariadb
 sed -i -e "4i innodb_file_per_table" /etc/my.cnf
@@ -26,29 +28,31 @@ sed -i -e "4i character-set-server=utf8" /etc/my.cnf
 systemctl enable mariadb
 systemctl start mariadb
 
-mysql -uroot -e "create database zabbix; grant all privileges on zabbix.* to zabbix@localhost identified by 'zabbix';"
+hatohol-db-initiator --db-user "" --db-password ""
 
-mysql zabbix -uzabbix -pzabbix < /usr/share/doc/zabbix-server-mysql-2.2.11/mysql/schema.sql
-mysql zabbix -uzabbix -pzabbix < /usr/share/doc/zabbix-server-mysql-2.2.11/mysql/images.sql
-mysql zabbix -uzabbix -pzabbix < /usr/share/doc/zabbix-server-mysql-2.2.11/mysql/data.sql
+mysql -uroot -e "CREATE DATABASE hatohol_client DEFAULT CHARACTER SET utf8;GRANT ALL PRIVILEGES ON hatohol_client.* TO hatohol@localhost IDENTIFIED BY 'hatohol';"
 
-#configure zabbix
-sed -i -e "/^DBName=/s/DBName=.*/DBName=zabbix/" /etc/zabbix/zabbix_server.conf
-sed -i -e "/^DBUser=/s/DBUser=.*/DBUser=zabbix/" /etc/zabbix/zabbix_server.conf
-sed -i -e "/^# DBPassword/a DBPassword=zabbix" /etc/zabbix/zabbix_server.conf
+/usr/libexec/hatohol/client/manage.py syncdb
 
-chown zabbix:zabbix /etc/zabbix/zabbix_server.conf
-chmod 400 /etc/zabbix/zabbix_server.conf
-
-systemctl enable zabbix-server
-systemctl enable zabbix-agent
-systemctl start zabbix-server
-systemctl start zabbix-agent
-
-#configure httpd
-sed -i -e 's/^#//' /etc/httpd/conf.d/zabbix.conf
-
+systemctl enable hatohol
 systemctl enable httpd
+
+systemctl start hatohol
 systemctl start httpd
+
+#プラグイン周り
+setsebool -P nis_enabled 1
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server.service
+rabbitmqctl add_vhost hatohol
+rabbitmqctl add_user hatohol hatohol
+rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
+curl -kL  https://bootstrap.pypa.io/get-pip.py | python
+pip install pika daemon
+yum install -y hatohol-hap2-fluentd
+
+#mkdir /opt/hatohol_azu
+#wget <pythonサーバ> -P /opt/hatohol_azu
+#wget <python_service> -P /usr/lib/systemd/system
 
 
