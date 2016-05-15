@@ -1,0 +1,8 @@
+[Unit]
+Description=Azure trapper Daemon
+[Service]
+ExecStart=/opt/azure_trapper/azure_trapper.py
+Restart=always
+Type=simple
+[Install]
+WantedBy=multi-user.target

@@ -40,8 +40,15 @@ curl -kL  https://bootstrap.pypa.io/get-pip.py | python
 pip install pika daemon
 yum install -y hatohol-hap2-fluentd
 
-#mkdir /opt/hatohol_azu
-#wget <pythonサーバ> -P /opt/hatohol_azu
-#wget <python_service> -P /usr/lib/systemd/system
+mkdir /opt/azure_trapper
+echo > trap_azu.log
+chmod a+r,a+w /opt/azure_trapper/trap_azu.log
+wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.py
+wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/start_hap_fluentd.sh
+wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/Azure-reader.conf
+wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/hap_fluentd.service
+wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.service
 
-
+chmod a+x /opt/azure_trapper/start_hap_fluentd.sh
+chmod a+x /opt/azure_trapper/azure_trapper.py
+systemctl daemon-reload
