@@ -8,23 +8,6 @@ rpm -ivh /tmp/epel-release-7-6.noarch.rpm
 yum install -y hatohol-server hatohol-web
 yum install -y mariadb-server
 
-#configure firewall
-#firewall-cmd --zone=public --add-port=80/tcp --permanent
-#firewall-cmd --zone=public --add-port=162/udp --permanent
-#firewall-cmd --add-port=5672/tcp --zone=public --permanent
-#firewall-cmd --add-port=5672/tcp --zone=public
-
-#cnfigure mariadb
-#sed -i -e "4i innodb_file_per_table" /etc/my.cnf
-#sed -i -e "4i innodb_log_buffer_size=16M" /etc/my.cnf
-#sed -i -e "4i innodb_buffer_pool_size=$(expr $(free|grep '^Mem'|awk '{print $2}') / 2)" /etc/my.cnf
-#sed -i -e "4i innodb_log_file_size=$(expr $(free|grep '^Mem'|awk '{print $2}') / 10)" /etc/my.cnf
-#sed -i -e "4i innodb_log_files_in_group=2" /etc/my.cnf
-#sed -i -e "4i key_buffer_size=$(expr $(free|grep '^Mem'|awk '{print $2}') / 10)" /etc/my.cnf
-#sed -i -e "4i max_allowed_packet=16MB" /etc/my.cnf
-#sed -i -e "4i skip-character-set-client-handshake" /etc/my.cnf
-#sed -i -e "4i character-set-server=utf8" /etc/my.cnf
-
 systemctl enable mariadb
 systemctl start mariadb
 
@@ -41,15 +24,21 @@ systemctl start hatohol
 systemctl start httpd
 
 #プラグイン周り
-#setsebool -P nis_enabled 1
-#systemctl enable rabbitmq-server
-#systemctl start rabbitmq-server.service
-#rabbitmqctl add_vhost hatohol
-#rabbitmqctl add_user hatohol hatohol
-#rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
-#curl -kL  https://bootstrap.pypa.io/get-pip.py | python
-#pip install pika daemon
-#yum install -y hatohol-hap2-fluentd
+wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo
+yum install erlang
+rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+yum install rabbitmq-server
+
+setsebool -P nis_enabled 1
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server.service
+rabbitmqctl add_vhost hatohol
+rabbitmqctl add_user hatohol hatohol
+rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
+
+curl -kL  https://bootstrap.pypa.io/get-pip.py | python
+pip install pika daemon
+yum install -y hatohol-hap2-fluentd
 
 #mkdir /opt/hatohol_azu
 #wget <pythonサーバ> -P /opt/hatohol_azu
