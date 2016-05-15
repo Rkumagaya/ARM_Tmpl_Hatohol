@@ -40,6 +40,8 @@ curl -kL  https://bootstrap.pypa.io/get-pip.py | python
 pip install pika daemon
 yum install -y hatohol-hap2-fluentd
 
+curl -L  http://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh|sh
+
 mkdir /opt/azure_trapper
 echo > trap_azu.log
 chmod a+r,a+w /opt/azure_trapper/trap_azu.log

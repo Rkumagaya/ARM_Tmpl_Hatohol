@@ -64,7 +64,7 @@
     "publicIPAddressName": "myPublicIP",
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
-    "vmName": "MyZBXVM",
+    "vmName": "MyHatoholVM",
     "vmSize": "Standard_A0",
     "virtualNetworkName": "MyVNET",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
@@ -150,12 +150,12 @@
       "properties": {
       "securityRules": [
         {
-          "name": "zbxs-rule",
+          "name": "azutrapper-rule",
           "properties": {
-            "description": "Allow ZBX Server",
+            "description": "Allow azure_trapper",
        	    "protocol": "Tcp",
        	    "sourcePortRange": "*",
-       	    "destinationPortRange": "10050",
+       	    "destinationPortRange": "8001",
        	    "sourceAddressPrefix": "Internet",
        	    "destinationAddressPrefix": "*",
        	    "access": "Allow",
@@ -163,20 +163,6 @@
        	    "direction": "Inbound"
      	  }
     	},
-     	{
-	  "name": "zbxa-rule",
-	  "properties": {
-     	    "description": "Allow ZBX Agent",
-	    "protocol": "Tcp",
-            "sourcePortRange": "*",
-       	    "destinationPortRange": "10051",
-       	    "sourceAddressPrefix": "Internet",
-      	    "destinationAddressPrefix": "*",
-            "access": "Allow",
-       	    "priority": 101,
-       	    "direction": "Inbound"
-       	 }
-      	},
         {
           "name": "web-rule",
           "properties": {
