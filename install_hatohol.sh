@@ -1,12 +1,11 @@
 #!/bin/bash
 
 #install hatohol
+yum install -y unzip wget
 wget -P /etc/yum.repos.d/ http://project-hatohol.github.io/repo/hatohol-el7.repo
-wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo
-yum install -y epel-release
-yum install -y hatohol-server hatohol-web erlang
-rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-yum install -y rabbitmq-server
+wget -P http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm /tmp/
+rpm -ivh /tmp/epel-release-7-6.noarch.rpm
+yum install -y hatohol-server hatohol-web
 
 #configure firewall
 firewall-cmd --zone=public --add-port=80/tcp --permanent
