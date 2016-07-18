@@ -49,16 +49,18 @@ wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl
 wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/hap_fluentd.service
 wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.service
 
+curl -L https://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh | sh
+
 chmod a+x /opt/azure_trapper/start_hap_fluentd.sh
 chmod a+x /opt/azure_trapper/azure_trapper.py
 systemctl daemon-reload
 
-rpm --import https://packages.treasuredata.com/GPG-KEY-td-agent
-  cat >/etc/yum.repos.d/td.repo <<'EOF';
-[treasuredata]
-name=TreasureData
-baseurl=http://packages.treasuredata.com/2/redhat/\$releasever/\$basearch
-gpgcheck=1
-gpgkey=https://packages.treasuredata.com/GPG-KEY-td-agent
-EOF
-yum install -y td-agent
+#rpm --import https://packages.treasuredata.com/GPG-KEY-td-agent
+#  cat >/etc/yum.repos.d/td.repo <<'EOF';
+#[treasuredata]
+#name=TreasureData
+#baseurl=http://packages.treasuredata.com/2/redhat/\$releasever/\$basearch
+#gpgcheck=1
+#gpgkey=https://packages.treasuredata.com/GPG-KEY-td-agent
+#EOF
+#yum install -y td-agent
