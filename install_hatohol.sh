@@ -30,6 +30,7 @@ rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
 #curl -kL  https://bootstrap.pypa.io/get-pip.py | python
 #pip install pika daemon
 yum install -y hatohol-hap2-fluentd
+hatohol-db-initiator --db-user "" --db-password ""
 
 mkdir /opt/azure_trapper
 chmod a+r,a+w /opt/azure_trapper
