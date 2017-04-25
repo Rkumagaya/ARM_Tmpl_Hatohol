@@ -19,6 +19,9 @@ mysql -uroot -e "CREATE DATABASE hatohol_client DEFAULT CHARACTER SET utf8;GRANT
 /usr/libexec/hatohol/client/manage.py syncdb
 
 #プラグイン周り
+wget -O /etc/yum.repos.d/epel-erlang.repo http://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo
+yum install -y erlang
+rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 yum install -y rabbitmq-server
 
 systemctl enable rabbitmq-server
@@ -27,8 +30,8 @@ rabbitmqctl add_vhost hatohol
 rabbitmqctl add_user hatohol hatohol
 rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
 
-#curl -kL  https://bootstrap.pypa.io/get-pip.py | python
-#pip install pika daemon
+curl -kL  https://bootstrap.pypa.io/get-pip.py | python
+pip install pika daemon
 yum install -y hatohol-hap2-fluentd
 yum install -y hatohol-hap2-zabbix
 hatohol-db-initiator --db-user "" --db-password ""
