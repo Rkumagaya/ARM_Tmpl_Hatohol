@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+
 #install hatohol
 yum install -y unzip wget
 wget -P /etc/yum.repos.d/ http://project-hatohol.github.io/repo/hatohol-el7.repo
@@ -46,8 +49,12 @@ wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl
 wget -P /opt/azure_trapper/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/Azure-reader.conf
 wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/hap_fluentd.service
 wget -P /usr/lib/systemd/system/ https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/azure_trapper.service
-wget -P /tmp wget http://packages.treasuredata.com.s3.amazonaws.com/2/redhat/7/x86_64/td-agent-2.3.0-0.el7.x86_64.rpm
+#wget -P /tmp wget http://packages.treasuredata.com.s3.amazonaws.com/2/redhat/7/x86_64/td-agent-2.3.0-0.el7.x86_64.rpm
+wget -P/tmp http://packages.treasuredata.com.s3.amazonaws.com/2/redhat/7/x86_64/td-agent-2.3.0-0.el7.x86_64.rpm
 rpm -i /tmp/td-agent-2.3.0-0.el7.x86_64.rpm
+
+wget -P /tmp https://raw.githubusercontent.com/Rkumagaya/ARM_Tmpl_Hatohol/master/clock
+cat /tmp/clock > /etc/sysconfig/clock
 
 chmod a+x /opt/azure_trapper/start_hap_fluentd.sh
 chmod a+x /opt/azure_trapper/azure_trapper.py
