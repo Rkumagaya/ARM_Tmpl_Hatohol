@@ -24,6 +24,8 @@ yum install -y erlang
 rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 yum install -y rabbitmq-server
 
+echo "NODENAME=rabbit@localhost" > /etc/rabbitmq/rabbitmq-env.conf
+
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 
