@@ -25,7 +25,8 @@ rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 yum install -y rabbitmq-server
 
 systemctl enable rabbitmq-server
-systemctl start rabbitmq-server.service
+systemctl start rabbitmq-server
+
 rabbitmqctl add_vhost hatohol
 rabbitmqctl add_user hatohol hatohol
 rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
