@@ -32,10 +32,6 @@ echo "NODENAME=rabbit@localhost" > /etc/rabbitmq/rabbitmq-env.conf
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 
-rabbitmqctl add_vhost hatohol
-rabbitmqctl add_user hatohol hatohol
-rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
-
 curl -kL  https://bootstrap.pypa.io/get-pip.py | python
 pip install pika daemon
 yum install -y hatohol-hap2-fluentd
@@ -56,6 +52,10 @@ rpm -i /tmp/td-agent-2.3.0-0.el7.x86_64.rpm
 chmod a+x /opt/azure_trapper/start_hap_fluentd.sh
 chmod a+x /opt/azure_trapper/azure_trapper.py
 systemctl daemon-reload
+
+rabbitmqctl add_vhost hatohol
+rabbitmqctl add_user hatohol hatohol
+rabbitmqctl set_permissions -p hatohol hatohol ".*" ".*" ".*"
 
 systemctl enable hatohol
 systemctl enable httpd
